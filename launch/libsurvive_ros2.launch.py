@@ -91,19 +91,13 @@ def generate_launch_description():
 
     # For bridging connection to foxglove running on a remote server.
     rosbridge_node = Node(
-        package='rosbridge_server',
-        executable='rosbridge_websocket',
-        name='rosbridge_server_node',
+        package='foxglove_bridge',
+        executable='foxglove_bridge',
+        name='foxglove_bridge',
         condition=IfCondition(LaunchConfiguration('rosbridge')),
         parameters=[
             {"port": 9090},
         ],
-        output='log')
-    rosapi_node = Node(
-        package='rosapi',
-        executable='rosapi_node',
-        name='rosapi_node',
-        condition=IfCondition(LaunchConfiguration('rosbridge')),
         output='log')
 
     # For recording all data from the experiment
@@ -120,6 +114,5 @@ def generate_launch_description():
             libsurvive_node,
             libsurvive_composable_node,
             rosbridge_node,
-            rosapi_node,
             bag_record_node
         ])
